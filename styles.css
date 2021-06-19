@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+}
+
+header {
+    background: rgb(82, 10, 10);
+    color: rgb(179, 156, 26);
+}
+
+h1 {
+    margin: 0;
+    text-align: center;
+    padding: 2rem 0;
+    text-transform: uppercase;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 60%;
+}
+
+.img-block {
+    margin: 2rem 0 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 200px;
+}
+
+.btn {
+    color: white;
+    background: #C2004B;
+    border: 0;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-center {
+    text-align: center;
+}
+
+@media all and (max-width: 500px) {
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        max-width: 90%;
+    }
+}
