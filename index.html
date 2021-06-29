@@ -18,14 +18,40 @@
             src="https://rlv.zcache.com/dwight_d_eisenhower_square_sticker-rb864998ae374438bbc94722fa5f6c1e8_0ugmc_8byvr_307.jpg"
             alt="A President's Face">
 
-        <div class="btn-center">
+        <!-- <div class="btn-center">
             <button id="start-btn" class="btn">Begin!</button>
-        </div>
+        </div> -->
         <!-- p has margin y -->
-        <p style="text-align: center;">Click 'Begin!', then check the console!</p>
-        <p style="text-align: center; font-size: 1rem;" id="write-president">Write President</p>
-        <br>
-        <p style="text-align: center;">Note: this is currently just a random generator.</p>
+
+        <!-- INTRODUCTION TO GAME START -->
+        <div id="intro-text">
+            <p>Want to play? The instructions are simple:</p>
+            <ol>
+                <li>Choose one U.S. Presidents (past or present)</li>
+                <li>The computer will ask 5 questions</li>
+                <li>Then try to guess your pick</li>
+                <li>If the computer guesses incorrectly, you win!</li>
+                <li>Otherwise, you owe me $5 dollars.</li>
+            </ol>
+            <p>Ready to begin?</p>
+            <div class="btn-center">
+                <button id="intro-btn" class="btn">START GAME
+                </button>
+            </div>
+        </div>
+        <!-- INTRODUCTION TO GAME END -->
+
+        <!-- GAME CONTENT START -->
+        <div id="game-content">
+            <div class="btn-center">
+                <button id="start-btn" class="btn">Begin!</button>
+            </div>
+            <!-- <p style="text-align: center;">Click 'Begin!', then check the console!</p> -->
+            <p style="text-align: center; font-size: 1rem;" id="write-president">Write President</p>
+            <br>
+            <!-- <p style="text-align: center;">Note: this is currently just a random generator.</p> -->
+        </div>
+        <!-- GAME CONTENT FINISH -->
     </div>
     <!-- 
         1. Find list of Presidents and put them in an array
@@ -34,7 +60,7 @@
         4.
         5. Deploy to GitHub, work more on later
      -->
-     <script src="./behavior.js"></script>
+    <script src="./behavior.js"></script>
 </body>
 
 </html>
