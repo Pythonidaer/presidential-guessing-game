@@ -12,8 +12,31 @@ let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 // Get the test Element I want to write the President to
 let getPres = document.getElementById("write-president");
 
+// Capture the content of our game (introduction, then the game itself)
+let introText = document.getElementById("intro-text");
+let gameContent = document.getElementById('game-content');
+gameContent.style.display = 'none';
+
 // Grab id of 'Begin!' start button
 let startBtn = document.getElementById("start-btn");
+
+// Grad id of 'START GAME' button
+let introBtn = document.getElementById('intro-btn');
+
+// set count to 0 so the computer guesses 5 times (asks 5 questions - those questions are 5 "random" letters)
+let count = 0;
+// set guesses to 5 so the computer prompts the User to confirm Y/N 5 times when 'startGameBtn' is clicked
+let guesses = 5;
+
+// Currently receives pushed indices from the presToLowerCase [] that matches a random letter
+let matchPresArr = [];
+
+// When clicked, hide the intro box and display the game content box
+introBtn.addEventListener('click', e => {
+    e.preventDefault();
+    introText.style.display = 'none';
+    gameContent.style.display = 'block';
+})
 
 // Then add functionality to it that generates a randomPresident by letter - when clicked/pushed
 startBtn.addEventListener('click', e => {
@@ -21,9 +44,46 @@ startBtn.addEventListener('click', e => {
     matchPresArr = [];
     randomPres();
     console.log(matchPresArr);
+    // console.log('-----')
     // getPres.innerHTML = matchPresArr[0].toUpperCase();
     getPres.innerHTML = matchPresArr[Math.floor(Math.random() * matchPresArr.length)].toUpperCase();
+
+    // matchPresArr.forEach(president => console.log(president));
+    // console.log(getPres.innerHTML);
 })
+
+// console.log(count);
+// startGameBtn.addEventListener('click', e => {
+//     e.preventDefault();
+//     for (count; count < guesses; count++) {
+//          let answer = confirm('Guess number: ' + (count + 1));
+//     console.log(answer);
+// }
+// })
+
+// End of game notes -- User might not know that their president's middle name has that letter.
+// It might make sense to only include first/last names, or to finish the game highlighting this fact.
+
+// NEXT FUNCTION:
+// 1. As  User,
+// 2. When I click the 'Begin!' button,
+// 3. Then the computer loops 5 times and confirms with the Okay/Cancel functionality:
+// 4. "Does your president contain the letter ${letter}?"
+// 5. If the User clicks 'Okay', then I want to filter the President's array with options matching that letter
+// 6. If the User clicks 'Cancel', then I want to filter the President's array with options not-matching that letter
+// 7. This means that if (true) else (false) should decision tree into two separate functions
+// ---------- For example, yesResponse() and noResponse()
+// 8. For now, another letter should be randomized from the 26 letters of the English alphabet (array)
+// 9. Once we see how this function looks, refactor.
+// 10. After the loop ends, there WILL definitely be an array of presidents, even if there is only one option.
+// 11. When the game is over, the computer will randomize an index from the final array, and that will be the PC's guess.
+// 12. If the User selects Yes, then we win! They should donate $5.
+// 13. If the User selects No, then we lose! They should still donate $5.
+
+
+
+
+
 
 // Declare a function that grabs a random letter from the letters array
 let randomLetter = () => {
@@ -35,8 +95,6 @@ const randLetter = randomLetter();
 
 // Console log the random letter to make sure it lines up with what President indexes are being 
 // console.log(randLetter);
-
-let matchPresArr = [];
 
 // Declare a function that loops over the array of lowercased Presidents
 // Console log every President that contains the random letter generated
