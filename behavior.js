@@ -7,8 +7,7 @@ let presidentsArray = ["George Washington", "John Adams", "Thomas Jefferson", "J
 let presArrToLowerCase = presidentsArray.map(pres => pres.toLowerCase());
 
 // Declare an array of every letter in the English alphabet
-let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
+// let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; 
 // Get the test Element I want to write the President to
 let getPres = document.getElementById("write-president");
 
@@ -23,17 +22,11 @@ let beginBtn = document.getElementById("start-btn");
 // Grad id of 'START GAME' button
 let introBtn = document.getElementById('intro-btn');
 
+
 // set count to 0 so the computer guesses 5 times (asks 5 questions - those questions are 5 "random" letters)
 let count = 0;
 // set guesses to 5 so the computer prompts the User to confirm Y/N 5 times when 'startGameBtn' is clicked
 let guesses = 5;
-
-// Store a random letter within a variable, then use that same letter until the function is invoked again.
-let randLetter;
-
-// Currently receives pushed indices from the presToLowerCase [] that matches a random letter
-// I no longer think I need this because the presArrToLowerCase can simply filter itself
-// let matchPresArr = [];
 
 // When clicked, hide the intro box and display the game content box
 introBtn.addEventListener('click', e => {
@@ -42,106 +35,132 @@ introBtn.addEventListener('click', e => {
     gameContent.style.display = 'block';
 })
 
-// Then add functionality to it that generates a randomPresident by letter - when clicked/pushed
+// // Transform a string into an object of unique letters from the above array, then spread them into an array
+const getUniqueLetters = (array) =>  [...new Set(array)].sort();
+
+// This will clean an array, turn it into one string with no special characters
+// Assign it to a new array, then that new array will be spread into individual characters, stripped of all duplicates
+const randomEnhancer = (array, array2) => {
+    array = array2.join("").replace(/ /g, '');
+    array = getUniqueLetters(array)
+    return array;
+}
+
+
+
+// This becomes re-assignable array of remaining letters within the updated presidential array.
+let letters;
+
+// Basically, compare array 1 to array 2. These will contain letters/string characters. 
+// For the length of the second array, filter the first array so that it does not contain any letters from the second array.
+let filterUsedLetters = (array, array2) => {
+    for (let j = 0; j < array2.length; j++) {
+        array = array.filter(arr => 
+            !arr.match(RegExp(array2[j], 'g')));
+    }
+}
+
+// 
+let usedLetters = [];
+
+// Declare a function that grabs a random letter from the letters array
+let randomLetter = (array, array2) => {
+    filterUsedLetters(array, array2)
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+
+// This begins the game, that will loop for n amount of guesses (see above), and filter an array of remaining options each time
 beginBtn.addEventListener('click', e => {
     e.preventDefault();
 
+
+
     for (count; count < guesses; count++) {
-        randLetter = randomLetter();
+        letters = randomEnhancer(letters, presArrToLowerCase);
+        let randLetter = randomLetter(letters, usedLetters);
+        usedLetters.push(randLetter);
         let answer = confirm(`Does your President's name contain the letter '${randLetter.toUpperCase()}'?`)
-            if (answer) {
-                presArrToLowerCase = presArrToLowerCase.filter(president =>
-                     president.match(RegExp(randLetter, 'g')));
-                console.log(presArrToLowerCase);
+        if (answer) {
+            presArrToLowerCase = presArrToLowerCase.filter(president =>
+                president.match(RegExp(randLetter, 'g')));
+                randomEnhancer(letters, presArrToLowerCase);
             } else {
                 presArrToLowerCase = presArrToLowerCase.filter(president =>
                     !president.match(RegExp(randLetter, 'g')));
-                console.log(presArrToLowerCase);
+                randomEnhancer(letters, presArrToLowerCase);
             }
-            // console.log(answer);
+            
         }
+
         let compSelection = presArrToLowerCase[Math.floor(Math.random() * presArrToLowerCase.length)];
         compSelection = String(compSelection).split(" ").map(word => word[0].toUpperCase() + word.substr(1)).join(" ");
-
 
         let finalAnswer = confirm(`
             Did you pick ${compSelection}?
         `)
-        console.log(compSelection);
-        console.log(finalAnswer);
-    // getPres.innerHTML = matchPresArr[Math.floor(Math.random() * matchPresArr.length)].toUpperCase();
+        // console.log(compSelection);
+        // console.log(finalAnswer);
+    getPres.innerHTML = compSelection.toUpperCase();
 })
 
+// Look at below instructions for populating the dropdown with presidents array (capitalized)
+/*
+                    <!-- Get select by #id -->
+                    <!-- Create option with value attribute -->
+                    <!-- For each president in array, make an option element -->
+                    <!-- Place value of index within html as well as value value -->
 
-// Declare a function that grabs a random letter from the letters array
-let randomLetter = () => {
-    return letters[Math.floor(Math.random() * letters.length)];
-}
+
+*/
+
 
 
 // End of game notes -- User might not know that their president's middle name has that letter.
 // It might make sense to only include first/last names, or to finish the game highlighting this fact.
 
-// MOST RECENT ToDos: 7/30/2021:
-// 1. Comprise random letters out of all the available presidents
-//    - This can be done because all Presidents combined have at least 1 of every letter in the alphabet.
-//    - let name = ["jonathan", "hammond"] // i.e. every president name
-//    - I need to join every president together into one string, possibly like .join(""). ---- name = name.join(""); == "jonathanhammond"
-//    - I then need to split every letter within that string into its own string with .split("") ---- name = name.split(""); == ["j", "o"] etc.
-//    - I then need to filter every unique string character within that array into a new one. I don't think new Set is the method I want to go down.
-// 2. Once I have letters that can be comprised of remaining presidents in an array, I should be able to enhance my random letter search (no z if unnecessary).
-// 3. Once I make my letter filter feature, I want to remake a modal of the confirm helper function, to fully control the styles of my layout.
-// 4. I might want to make a dropdown too, that can show the User the list of Presidents to imply that I am considering middle names as well.
-// 5. I want to add an array of photos that will work for every president, even the presidents I don't like :)
-// 6. When I guess a President, I want to plop their name on the screen for one final "yes" or "no". When that happens, a check or an x goes over the image if I am right or wrong.
-// 7. I then want to add the "buy me a coffee" button to begin working with donations.
-// 8. I then want to offer a refresh button to play again.
 
-// NEXT FUNCTION:
-// 1. As  User,
-// 2. When I click the 'Begin!' button,
-// 3. Then the computer loops 5 times and confirms with the Okay/Cancel functionality:
-// 4. "Does your president contain the letter ${letter}?"
-        // 5. If the User clicks 'Okay', then I want to filter the President's array with options matching that letter
-// 6. If the User clicks 'Cancel', then I want to filter the President's array with options not-matching that letter
-// 7. This means that if (true) else (false) should decision tree into two separate functions
-// ---------- For example, yesResponse() and noResponse()
-// 8. For now, another letter should be randomized from the 26 letters of the English alphabet (array)
-// 9. Once we see how this function looks, refactor.
-// 10. After the loop ends, there WILL definitely be an array of presidents, even if there is only one option.
-// 11. When the game is over, the computer will randomize an index from the final array, and that will be the PC's guess.
-// 12. If the User selects Yes, then we win! They should donate $5.
-// 13. If the User selects No, then we lose! They should still donate $5.
+// TO DO:
+// 1. Make a dropdown of all the presidents, just to show the user their options.
+// 2.   --- Look up how to write values into a dropdown from JavaScript.
+// 3. Once this language is updated, add that middle names are used per Letty's observation.
+// 4. Recreate the 'confirm' functionality into a custom modal. Maybe look up how to make one from scratch, since I am not using a library?
+// 5. Once more clarifications have been made, I need to test this out with some people, double check the filters, and update future developments.
+// 6. Buy me a coffee:
+// 7.    --- If the User selects Yes, then we win! They should donate $5.
+// 8.    --- If the User selects No, then we lose! They should still donate $5.
+// 9. Find 40+ pictures for each president that shows their face in a shape similar to the placeholder now (Ike). Make this appear for every compGuess (1 per game).
+// 10. Add functionality that prompts user to click yes or no, then add a green checkmark or X on the photo. When game is over, maybe hide the content box.
+// 11. After User confirms I was right or wrong, hide photo (especially if it's wrong!). Ask User to play again, and make the "buy me a coffee" button appear.
+// 12. If the User chooses to play again, either instruct them to refresh the browser, or button to refresh.
+// 13. Future dev: re-visit sorting algorithms - there is definitely a way to enhance this further, but I think it's diminished returns for now.
 
-/*
-Todo (later) / PSEUDOCODE:
-   1. I want this to be a Presidential guessing game.
-   2. I want the User to begin the came by clicking 'Begin!'
-   3. When this happens, I want to randomly generate a letter from an array.
-   4. I want to write to the screen "Does your President's name contain the letter ${letter}?"
-   5. I want two buttons to appear after User begins game: 'Yes' or 'No'
-   6. These buttons contain important functionality that decides the contents of future arrays.
-   7. Basically, the game starts with an array of every President.
-         8. I want the computer to attempt to guess the User's President in 5 turns (or less).
-   9. I want to loop and ask the User about their letter 5 times
-   10. If the User answers 'yes' to a letter, filter a new array of only the Presidents with that letter.
-   11. If the User answers 'no' to a letter, filter a new array of only the Presidents without that letter.
-   12. After the fifth time, the array should be relatively smaller - ask the User if it's the first array index.
-   13. Ideally, if the filter works well enough, there will only be one index in the array anyway - corret Pres
-       14. Note, with each letter guessed, there should be no repeats.
-      15. This means I should filter an array each time to elminate the possibility of re-using a letter in 5 turns.
-      16. Future Development: Square photos for every president, with alt tags matching their names in the array
-      17. Future Dev: When the computer guesses the User's president, let that president photo appear (see Dwight).
-      18. Future Dev: This will be a final Yes / No button - if user clicks Yes, a green checkmark over the photo.
-      19. Future Dev: If user clicks No, a red X over the photo.
-      20. At this point, the game is over, so maybe let a box pop up that asks the user if they want to play again.
-      21. If the User chooses to play again, either instruct them to refresh the browser, or button to refresh.
+/* =====================
+NOTES ON THE LETTER FILTER FEATURE
+Apparently there are three ways I can try to do this:
 
-Thought:
-   - I bet there is a way to generate an array based off every letter in the Presidents array.
-   - Since I want to filter/make new arrays each time anyway, maybe I could have letters based off the array.
-   - This might make my selection more enhanced, because then it only chooses from letters remaining in the list of possible Presidents
-   - I might need to do this by joining each president in the array into one string, splitting every letter into a string index, then filtering out that way.
-   - I need to make a modal containing the same "Yes" or "No" functionality so that I do not use the "confirm" out of the box functionality.
+const someArray = ['a', 'b', 'b', 'c', 'd', 'a', 'd']
 
-*/
+1. const getUniqueValues = (array) => (
+    array.filter((currentValue, index, arr) => (
+        arr.indexOf(currentValue) === index
+    ))
+);
+
+getUniqueValues(someArray);
+
+2. const getUniqueValues = (array) => (
+    array.reduce((acc, currentValue) => (
+        acc.includes(currentValue) ? acc : [...acc, currentValue]
+    ), [])
+);
+
+getUniqueValues(someArray);
+
+3. const getUniqueValues = (array) => (
+    [...new Set(array)]
+);
+
+getUniqueValues(someArray);
+
+======================= */

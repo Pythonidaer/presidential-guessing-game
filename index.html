@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
-    <title>Document</title>
+    <title>Presidential Guessing Game</title>
 </head>
 
 <body>
@@ -27,17 +27,31 @@
         <div id="intro-text">
             <p>Want to play? The instructions are simple:</p>
             <ol>
-                <li>Choose one U.S. Presidents (past or present)</li>
+                <li>Choose any U.S. President (past or present)</li>
                 <li>The computer will ask 5 questions</li>
-                <li>Then try to guess your pick</li>
+                <ol style="list-style-type: lower-alpha;">
+                    <li>Then try to guess your pick</li>
+                </ol>
                 <li>If the computer guesses incorrectly, you win!</li>
                 <li>Otherwise, you owe me $5 dollars.</li>
             </ol>
+            <p>Note! The computer considers middle names.</p>
             <p>Ready to begin?</p>
             <div class="btn-center">
                 <button id="intro-btn" class="btn">START GAME
                 </button>
             </div>
+            <!-- <form >
+                <label for="cars">Choose a car:</label>
+                <select name="cars" id="cars">
+
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                <br><br> 
+              </form> -->
         </div>
         <!-- INTRODUCTION TO GAME END -->
 
@@ -62,6 +76,7 @@
      -->
     <script src="./behavior.js"></script>
     <!-- <script src="./letterFilterPractice.js"></script> -->
+    <!-- <script src="./letterEnhancerPractice.js"></script> -->
 </body>
 
 </html>
