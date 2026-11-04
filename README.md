@@ -35,6 +35,22 @@ This repo is for practice and has an MIT License. Use it if you want!
 
 [MDN String.prototype.replace()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 
+## To Do
+- Add the guessed president's portrait using a stored Wikidata ID and its
+  Wikimedia Commons `P18` image, including appropriate image attribution.
+
+## Design Palette
+- Navy `#15253D` — header and strong headings
+- Dark navy `#0B1729` — deep contrast
+- Burgundy `#8A1638` — primary actions
+- Dark burgundy `#68102A` — action hover states
+- Gold `#D6B75A` — logo accent
+- Cream `#F5F1E8` — page background
+- Ink `#202833` — primary text
+- Muted gray `#646B73` — supporting text
+- Border `#D8D2C4` — controls and cards
+- Paper `#FFFFFF` — card backgrounds
+
 
 
 
